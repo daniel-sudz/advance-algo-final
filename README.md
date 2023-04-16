@@ -12,8 +12,16 @@ The traditional version of Set involves a deck of 81 cards. Each card has 4 prop
 An example set board with n=12 cards, p=4 properties, and v=3 values.[^2] We will continue to use the notation {n, p, v} for the generalized parameters of Set because they are intuitive. Some papers use different notation such as {m, n, k} as a matter of preference. 
 
 
-# Relation to Linear Algebra 
-aa
+# Relation to Linear Algebra and Finite Fields
+The cannonical version of Set with p=4 properties and v=3 values has an interesting property when represented as a finite field. If you represent each card as a vector in $F^4_3$ with the following encoding: [^3]
+
+| Color  | Number | Shape  | Fill |
+| ------------- | ------------- | ------------- | ------------- |
+| 0 = Red | 0 = 1 symbol  | 0 = oval  | 0 = No fill  |
+| 1 = Purple  | 1 = 2 symbols  | 1 = diamonds  | 1 = Shaded   |
+| 2 = Green  | 2 = 3 symbols  | 2 = squigle  | 2 = Solid  |
+
+a set can be shown to always form a line with modular wrap-around.  
 
 
 
