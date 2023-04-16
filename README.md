@@ -1,6 +1,6 @@
-# Meta-analysis of Set Card Game Complexity
+# Set Card Game Complexity and Genetic Algorithm
 
-The Set card game was released in 1991[^1], and has been studied extensively by mathmaticians over the last several decades for its unique combinatorial properties. In this writeup, we will highlight some of these results and provide example code for playing the Set card game. 
+The Set card game was released in 1991[^1], and has been studied extensively by mathmaticians over the last several decades for its unique combinatorial properties. In this writeup, we will highlight some of these results and provide example code for finding valid Sets. 
 
 # What is Set? 
 The traditional version of Set involves a deck of 81 cards. Each card has 4 properties (color, shape, shading, number) and each property has 3 versions. This create a total of $3^4 = 81$ cards in the deck. A "valid Set" involves a pair of 3 cards that for each property have either all the same value or all different values. Players play the game by dealing 12 cards face up and simultaneously look for valid Sets. When a player finds a valid set, they remove the set from board and 3 more cards are dealt to replace them. The game ends when there are no more valid Sets left or all cards have been exausted. A player wins the game if they have found more valid Sets than their opposition. 
@@ -12,7 +12,7 @@ The traditional version of Set involves a deck of 81 cards. Each card has 4 prop
 An example set board with n=12 cards, p=4 properties, and v=3 values.[^2] We will continue to use the notation {n, p, v} for the generalized parameters of Set because they are intuitive. Some papers use different notation such as {m, n, k} as a matter of preference. 
 
 
-# Relation to Linear Algebra and Finite Fields
+# Sidenote: Relation to Linear Algebra and Finite Fields
 The cannonical version of Set with p=4 properties and v=3 values has an interesting property when represented as a finite field. If you represent each card as a vector in $F^4_3$ with the following encoding: [^3]
 
 | Color  | Number | Shape  | Fill |
@@ -22,6 +22,10 @@ The cannonical version of Set with p=4 properties and v=3 values has an interest
 | 2 = Green  | 2 = 3 symbols  | 2 = squigle  | 2 = Solid  |
 
 a set can be shown to always form a line with modular wrap-around.  
+
+# Complexity Results: Multi-Dimensional Matching
+
+# Genetic Algorithm for Set
 
 
 
