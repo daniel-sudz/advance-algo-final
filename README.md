@@ -21,7 +21,11 @@ The cannonical version of Set with p=4 properties and v=3 values has an interest
 | 1 = Purple  | 1 = 2 symbols  | 1 = diamonds  | 1 = Shaded   |
 | 2 = Green  | 2 = 3 symbols  | 2 = squigle  | 2 = Solid  |
 
-a set can be shown to always form a line with modular wrap-around.  
+a set can be shown to always form a line with modular wrap-around. 
+
+# Sidenote: Minimum cards to deal before valid Set
+# Sidenote: 2-card one-compliment rule 
+
 
 # Complexity Results: Multi-Dimensional Matching
 
