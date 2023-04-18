@@ -1,6 +1,9 @@
 from mip import *
 
-
+"""
+    Citation: I generalized the mathmatical formulation here (https://tommyodland.com/articles/2019/the-card-game-set-as-a-binary-integer-program/).
+    into a parameterized model (the source hardcoded p=3 and v=4 see writeup for notation). The MIP library was used for implementation.
+"""
 
 
 """
@@ -27,16 +30,15 @@ def find_set(cards_on_board, num_properties, num_values):
     for p in range(num_properties):
         vsums = [xsum(include[i] * cards_on_board[i][p][v] for i in range(cards_on_board)) for v in range(num_values)]
 
-        # use y binary variable to branch on whether all values are the same or not
+        # use y binary variable to branch on whether all values are different or not
         y = m.add_var(var_type=BINARY)
 
         # use z binary variable to represent for each possible value if all cards have that value
-        all_same_value =  [ m.add_var(var_type=BINARY) for i in range(num_values) ]
+        z =  [ m.add_var(var_type=BINARY) for i in range(num_values) ]
 
+        # at most one z value can be true and one value is true if and only if y is false
+        m += xsum(z[i] for i in range(num_values)) == 1 - y
         
-
-
-    #m.objective = maximize(xsum(include[i] for i in range(num_properties)))
-
-
-    pass
+        # if y is true, 
+        for i, _ in enumerate(vsums):
+            m += vsums[i] == y + num_properties * z[i]
