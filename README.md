@@ -1,4 +1,4 @@
-# Set Card Game Complexity and Genetic Algorithm
+# Set Card Game Complexity and Solver with IP
 
 The Set card game was released in 1991[^1], and has been studied extensively by mathmaticians over the last several decades for its unique combinatorial properties. In this writeup, we will highlight some of these results and provide example code for finding valid Sets. 
 
