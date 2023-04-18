@@ -21,14 +21,14 @@ def find_set(cards_on_board, num_properties, num_values):
     m = Model()
 
     # Descision variables representing whether to include a given card on the board or not
-    include = [ m.add_var(var_type=BINARY) for i in range(cards_on_board) ]
+    include = [ m.add_var(var_type=BINARY) for i in range(len(cards_on_board)) ]
 
     # Must include exactly enough cards to form a valid Set
-    m += xsum(include[i] for i in range(cards_on_board)) == num_properties
+    m += xsum(include[i] for i in range(len(cards_on_board))) == num_properties
 
 
     for p in range(num_properties):
-        vsums = [xsum(include[i] * cards_on_board[i][p][v] for i in range(cards_on_board)) for v in range(num_values)]
+        vsums = [xsum(include[i] * cards_on_board[i][p][v] for i in range(len(cards_on_board))) for v in range(num_values)]
 
         # use y binary variable to branch on whether all values are different or not
         y = m.add_var(var_type=BINARY)
@@ -42,3 +42,28 @@ def find_set(cards_on_board, num_properties, num_values):
         # if y is true, 
         for i, _ in enumerate(vsums):
             m += vsums[i] == y + num_properties * z[i]
+    
+    status = m.optimize(max_seconds=10)
+
+
+# Run the solver on a traditional version of Set and an example board
+def example_find():
+    cards_on_board = [
+        [[0, 0, 1, 0], [0, 0, 1, 0], [1, 0, 0, 0]], # card 1
+        [[0, 0, 1, 0], [0, 0, 1, 0], [1, 0, 0, 0]], # card 2
+        [[0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]], # card 3
+        [[0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]], # card 4
+        [[0, 0, 1, 0], [1, 0, 0, 0], [1, 0, 0, 0]], # card 5
+        [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]], # card 6
+        [[0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]], # card 7
+        [[0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]], # card 8
+        [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 0, 1]], # card 9
+        [[1, 0, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0]], # card 10
+        [[0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 1, 0]], # card 11
+        [[1, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]], # card 12
+    ],
+    num_properties = 3 
+    num_values = 4
+    find_set(cards_on_board, num_properties, num_values)
+
+example_find()
