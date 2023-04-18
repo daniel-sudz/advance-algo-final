@@ -15,7 +15,8 @@ from mip import *
     @param num_properties: the total number of properties for each card (number)
     @param num:values: the total number of possible values for each property (number)
 
-    @returns number[][]: a list of cards that form a valid Set or empty list if none are found
+    @returns number[]: a binary list of whether a card at index from cards_on_board is part of the solution or not
+                       may return empty list if no solution is found
 """
 def find_set(cards_on_board, num_properties, num_values):
     m = Model()
@@ -42,28 +43,34 @@ def find_set(cards_on_board, num_properties, num_values):
         # if y is true, 
         for i, _ in enumerate(vsums):
             m += vsums[i] == y + num_properties * z[i]
-    
+
     status = m.optimize(max_seconds=10)
 
+    if status == OptimizationStatus.OPTIMAL or status == OptimizationStatus.FEASIBLE:
+        return [round(v.x) for v in include]
+    return []
 
 # Run the solver on a traditional version of Set and an example board
+# It's technically not valid as some cards are duplicates but this is just an example of API usage
+# Cards 1, 2, and 8 are selected because they are all duplicates and all have the same values
 def example_find():
     cards_on_board = [
-        [[0, 0, 1, 0], [0, 0, 1, 0], [1, 0, 0, 0]], # card 1
-        [[0, 0, 1, 0], [0, 0, 1, 0], [1, 0, 0, 0]], # card 2
-        [[0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]], # card 3
-        [[0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]], # card 4
-        [[0, 0, 1, 0], [1, 0, 0, 0], [1, 0, 0, 0]], # card 5
-        [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]], # card 6
-        [[0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]], # card 7
-        [[0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]], # card 8
+        [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]], # card 1
+        [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]], # card 2
+        [[0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]], # card 3
+        [[0, 0, 1, 0], [1, 0, 0, 0], [1, 0, 0, 0]], # card 4
+        [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]], # card 5
+        [[0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]], # card 6
+        [[0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]], # card 7
+        [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]], # card 8
         [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 0, 1]], # card 9
         [[1, 0, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0]], # card 10
         [[0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 1, 0]], # card 11
         [[1, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]], # card 12
-    ],
+    ]
     num_properties = 3 
     num_values = 4
-    find_set(cards_on_board, num_properties, num_values)
+    result = find_set(cards_on_board, num_properties, num_values)
+    print(result)
 
 example_find()
