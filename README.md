@@ -29,11 +29,6 @@ a set can be shown to always form a line with modular wrap-around.
 # Solver for valid Set with IP Formulation
 Below is a generalization of the approach taken in the following source [^4] to formulate finding a valid Set with arbitrary N (cards on board), P (number of card parameters), and V (number of values for each parameter). 
 
-<strong>*Maximize*</strong>
-
-$$ 
-N/A
-$$
 
 <strong>*Given*</strong>
 
@@ -41,15 +36,7 @@ $$
 b_{i,p,v}
 $$
 
-$$ 
-vsum_{p,v} = \sum_{i=0}^{i=N} \sum_{v=0}^{v=V} (inc[i] * b[i][p][v]) \ \ \ \  \forall { p,v }
-$$
-
-$$ 
-z_{p,v} = 
-$$
-
-<strong>*Subject To*</strong>
+<strong>*Subject To (Descision Variable Constraints)*</strong>
 
 We have exactly enough cards to form a set
 
@@ -57,10 +44,37 @@ $$
 \sum_{i=0}^{i=n} inc[i] = p 
 $$
 
+For every parameter, compute how many chosen cards have a given value
+
+$$ 
+vsum_{p,v} = \sum_{i=0}^{i=N} \sum_{v=0}^{v=V} (inc[i] * b[i][p][v]) \ \ \ \  \forall { p,v }
+$$
+
+Let z[p][v] represent which value is going to be the same for a given parameter. If all values are different, then z[p][v] should be 0 for all v. Let the variable y[p] allow branching on these two cases. If y[p] is true then all values are different for a given parameter. Otherwise, all values should be the same for a given parameter. 
+
+$$
+\sum_{v=0}^{v=V} z[p][v] = 1 - y[p] \ \ \ \ \forall p=0...P 
+$$
+
+
+
+
+<strong>*Subject To (Descision Variable Definitions)*</strong>
+
+
 
 $$
 inc_{i} \in \{0,1\}  \ \ \ \  \forall i=0...N
 $$
+
+$$ 
+z_{p,v} \in \{0,1\}  \ \ \ \ \forall p=0...P, \forall v=0...V
+$$
+
+$$ 
+y_{p} \in \{0,1\}  \ \ \ \ \forall p=0...P
+$$
+
 
 
 # Sidenote: Minimum cards to deal before valid Set
