@@ -39,7 +39,7 @@ $$
 b_{i,p,v}
 $$
 $$ 
-vsum_{p,v} = \sum_{i=0}^{i=N} \sum_{v=0}^{v=V} (inc[i] * b[i][p][v]) \forall { p,v }
+vsum_{p,v} = \sum_{i=0}^{i=N} \sum_{v=0}^{v=V} (inc[i] * b[i][p][v]) \ \ \ \  \forall { p,v }
 $$
 
 $$ 
@@ -55,7 +55,7 @@ $$
 
 
 $$
-\sum_{i=0}^{i=n} inc[i] = p 
+inc_{i} \in \{0,1\}  \ \ \ \  \forall i=0...N
 $$
 
 
