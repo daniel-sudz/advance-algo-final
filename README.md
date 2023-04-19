@@ -34,6 +34,14 @@ In k-dimensions where $k \ge 3$, hypergraphs contain hyperedges that each connec
 
 
 # Reducing Multi-Dimensional Matching to Set
+Below is an explanation of approaches from Chaudhuri et al. [^8] and Lampis et al. [^9]. We want to show that finding valid Sets is NP-complete and that no efficient algorithm exists for doing so in the generalized case. In the later section, we will show how one can implement an algorithm for finding valid Sets by using the python MIP (mixed-integer-programming) library and a binary integer program (IP) formulation.
+
+Consider a board of n cards with p properties and v values. Take a hypergraph which contains $p*v$ total vertices. Represent every card from the board as a hyperedge connecting every vertex that has a matching property/value pair. 
+
+Lampis notes that a perfect matching of the hypergraph must be a valid Set. The reason for this is that a perfect matching makes sure that for every property from the cards (hyperedges) selected, all values must be different. If this was not the case, then some hyperedges would overlap vertices and not be a perfect matching.
+
+However, because valid Sets can also contain cards with properties of all the same value, not all perfect matching of the hypergraph are valid Sets. 
+
 
 # Solver for valid Set with IP Formulation
 Below is a generalization of the approach taken in the following source [^4] to formulate finding a valid Set with arbitrary N (cards on board), P (number of card parameters), and V (number of values for each parameter). 
@@ -130,3 +138,5 @@ a set can be shown to always form a line with modular wrap-around.
 [^5]: https://www.youtube.com/watch?v=GhjwOiJ4SqU
 [^6]: https://en.wikipedia.org/wiki/3-dimensional_matching#/media/File:3-dimensional-matching.svg
 [^7]: https://en.wikipedia.org/wiki/Karp%27s_21_NP-complete_problems#CITEREFKarp1972
+[^8]: http://pbg.cs.illinois.edu/papers/set.pdf
+[^9]: https://www.irif.fr/~vmitsou/setgame.pdf
