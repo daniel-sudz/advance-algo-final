@@ -2,16 +2,16 @@ from mip import *
 
 """
     Citation: I generalized the mathmatical formulation here (https://tommyodland.com/articles/2019/the-card-game-set-as-a-binary-integer-program/).
-    into a parameterized model (the source hardcoded p=3 and v=4 see writeup for notation). The MIP library was used for implementation.
+    into a parameterized model (the source hardcoded p=4 and v=3 see writeup for notation). The MIP library was used for implementation.
 """
 
 
 """
     Finds a valid Set on a board 
 
-    A card is represented by a number[] containing the value for each card property
+    A card is represented by a number[p][v] telling if a value is present (1) or not (0) for every property.
 
-    @param cards_on_board: a list of cards that are currently on the board (number[][])
+    @param cards_on_board: a list of cards that are currently on the board (number[][][])
     @param num_properties: the total number of properties for each card (number)
     @param num:values: the total number of possible values for each property (number)
 
@@ -40,7 +40,7 @@ def find_set(cards_on_board, num_properties, num_values):
         # at most one z value can be true and one value is true if and only if y is false
         m += xsum(z[i] for i in range(num_values)) == 1 - y
         
-        # if y is true, 
+        # a valid Set is formed on the condition that all values for every property are either all the same or all different
         for i, _ in enumerate(vsums):
             m += vsums[i] == y + num_properties * z[i]
 

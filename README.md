@@ -40,7 +40,10 @@ Consider a board of n cards with p properties and v values. Take a hypergraph wh
 
 Lampis notes that a perfect matching of the hypergraph must be a valid Set. The reason for this is that a perfect matching makes sure that for every property from the cards (hyperedges) selected, all values must be different. If this was not the case, then some hyperedges would overlap vertices and not be a perfect matching.
 
-However, because valid Sets can also contain cards with properties of all the same value, not all perfect matching of the hypergraph are valid Sets. 
+However, because valid Sets can also contain cards with properties of all the same value, not all valid Sets are perfect matchings of the hypergraph. To combat this, Lampis refers to an approach by Chaudhuri to do a polynomial transformation on the graph. To do this, an additional possible value is added to every property of every card. Additionally, an extra card referred to as $c$ is introduced to the board with every property set to the value $v+1$ (the newly added value).
+
+
+
 
 
 # Solver for valid Set with IP Formulation
