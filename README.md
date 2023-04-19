@@ -11,9 +11,29 @@ The traditional version of Set involves a deck of 81 cards. Each card has 4 prop
  
 An example set board with n=12 cards, p=4 properties, and v=3 values.[^2] We will continue to use the notation {n, p, v} for the generalized parameters of Set because they are intuitive. Some papers use different notation such as {m, n, k} as a matter of preference. 
 
+# What is Multidimensional Matching
+To analyze the complexity of finding valid Sets, we will be using a reduction from multidimensional matching that has been studied for the card game Set before. 
+
+<p align="center">
+  <img src="./docs/bipartite.jpg" width="500"/>
+</p>
+
+An example picture of a bipartite matching [^5].
+
+The 2-dimension case is known as bipartite matching. In this case, vertices of a graph are partitioned into two disjoint sets with edges connecting them. A matching is a set of edges that cover each vertex at most once. A maximum matching is identical to a min-cost edge cover. It's trivial to solve bipartite matching in polytime using a max-flow algorithm. To do so, one of the disjoint sets is connected to the source (with inf capacity) and the other disjoint set is connected to the target/sink (with inf capacity). All original edges are left at capacity one.
+
+<p align="center">
+  <img src="./docs/3dm.png" height="300"/>
+</p>
+
+An example of 3-dimensional matching [^6].
+
+In k-dimensions where $k \ge 3$, hypergraphs contain hyperedges that each connect k-vertices. Figure a above shows an example input graph with $k = 3$. The figures b and c show examples of valid matchings. 
+
+3-dimensional matching is one of Karps 21 NP-complete problems published in 1972 [^7].
 
 
-# Complexity Results: Multi-Dimensional Matching
+# Reducing Multi-Dimensional Matching to Set
 
 # Solver for valid Set with IP Formulation
 Below is a generalization of the approach taken in the following source [^4] to formulate finding a valid Set with arbitrary N (cards on board), P (number of card parameters), and V (number of values for each parameter). 
@@ -107,3 +127,6 @@ a set can be shown to always form a line with modular wrap-around.
 [^2]: https://www.exodusbooks.com/set-game/9097/
 [^3]: https://www.math.ucdavis.edu/~anne/FQ2014/set_game.pdf
 [^4]: https://tommyodland.com/articles/2019/the-card-game-set-as-a-binary-integer-program/
+[^5]: https://www.youtube.com/watch?v=GhjwOiJ4SqU
+[^6]: https://en.wikipedia.org/wiki/3-dimensional_matching#/media/File:3-dimensional-matching.svg
+[^7]: https://en.wikipedia.org/wiki/Karp%27s_21_NP-complete_problems#CITEREFKarp1972
