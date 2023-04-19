@@ -30,14 +30,17 @@ a set can be shown to always form a line with modular wrap-around.
 Below is a generalization of the approach taken in the following source [^4] to formulate finding a valid Set with arbitrary N (cards on board), P (number of card parameters), and V (number of values for each parameter). 
 
 <strong>*Maximize*</strong>
+
 $$ 
 N/A
 $$
 
 <strong>*Given*</strong>
+
 $$ 
 b_{i,p,v}
 $$
+
 $$ 
 vsum_{p,v} = \sum_{i=0}^{i=N} \sum_{v=0}^{v=V} (inc[i] * b[i][p][v]) \ \ \ \  \forall { p,v }
 $$
@@ -49,6 +52,7 @@ $$
 <strong>*Subject To*</strong>
 
 We have exactly enough cards to form a set
+
 $$
 \sum_{i=0}^{i=n} inc[i] = p 
 $$
