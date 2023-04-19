@@ -32,16 +32,32 @@ Below is a generalization of the approach taken in the following source [^4] to 
 
 <strong>*Given*</strong>
 
+We are given the board (b) as an input. Let b[i] represent a given card such that b[i][p][v] tells us if a given value is on the card for a given parameter. For example: a "green two symbol squigle with no fill" might look like this: 
+
+| param (p) | value 0 | value 1  | value 2 |
+| ------------- | ------------- | ------------- | ------------- | 
+| Color     |0 (not red) |0 (not purple)|1 (is green)|
+| Number    |0 (not one symbol)|1 (has two symbols)|0 (not three symbol)|
+| Shape     |0 (not oval)|0 (not diamond)|1 (has a squigle)|
+| Fill      |1 (has no fill)|0 (is not shaded)|0 (is not solid)|
+
+
 $$ 
-b_{i,p,v}
+N, P, V \in \mathbb{N}
 $$
+
+$$ 
+b_{i,p,v} \in \{0,1\} \ \ \ \ \forall i=0...N, \forall p=0...P, \forall v=0...V
+$$
+
+
 
 <strong>*Subject To (Descision Variable Constraints)*</strong>
 
-We have exactly enough cards to form a set
+We have exactly enough cards to form a valid Set
 
 $$
-\sum_{i=0}^{i=n} inc[i] = p 
+\sum_{i=0}^{i=N} inc[i] = V
 $$
 
 For every parameter, compute how many chosen cards have a given value
@@ -56,6 +72,11 @@ $$
 \sum_{v=0}^{v=V} z[p][v] = 1 - y[p] \ \ \ \ \forall p=0...P 
 $$
 
+Now, use the the variable z and computed vsums parameter to make sure that we have a valid Set. 
+
+$$
+\sum_{v=0}^{v=V} vsum[p][v] = y[p] + P * z[p][v] \ \ \ \ \forall p=0...P
+$$
 
 
 
