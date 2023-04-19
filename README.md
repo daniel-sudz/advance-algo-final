@@ -23,14 +23,44 @@ The cannonical version of Set with p=4 properties and v=3 values has an interest
 
 a set can be shown to always form a line with modular wrap-around. 
 
-# Sidenote: Minimum cards to deal before valid Set
-# Sidenote: 2-card one-compliment rule 
-
 
 # Complexity Results: Multi-Dimensional Matching
 
-# Genetic Algorithm for Set
+# Solver for valid Set with IP Formulation
+Below is a generalization of the approach taken in the following source [^4] to formulate finding a valid Set with arbitrary N (cards on board), P (number of card parameters), and V (number of values for each parameter). 
 
+<strong>*Maximize*</strong>
+$$ 
+N/A
+$$
+
+<strong>*Given*</strong>
+$$ 
+b_{i,p,v}
+$$
+$$ 
+vsum_{p,v} = \sum_{i=0}^{i=N} \sum_{v=0}^{v=V} (inc[i] * b[i][p][v]) \forall { p,v }
+$$
+
+$$ 
+z_{p,v} = 
+$$
+
+<strong>*Subject To*</strong>
+
+We have exactly enough cards to form a set
+$$
+\sum_{i=0}^{i=n} inc[i] = p 
+$$
+
+
+$$
+\sum_{i=0}^{i=n} inc[i] = p 
+$$
+
+
+# Sidenote: Minimum cards to deal before valid Set
+# Sidenote: 2-card one-compliment rule 
 
 
 
@@ -39,3 +69,4 @@ a set can be shown to always form a line with modular wrap-around.
 [^1]: https://www.setgame.com/sites/default/files/instructions/SET%20INSTRUCTIONS%20-%20ENGLISH.pdf
 [^2]: https://www.exodusbooks.com/set-game/9097/
 [^3]: https://www.math.ucdavis.edu/~anne/FQ2014/set_game.pdf
+[^4]: https://tommyodland.com/articles/2019/the-card-game-set-as-a-binary-integer-program/
