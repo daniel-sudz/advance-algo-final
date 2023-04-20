@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Install tools
-        run:
+        run: |
           sudo apt install python3-pip
           sudo pip3 install --upgrade pip
           pip3 install -r requirements.txt
