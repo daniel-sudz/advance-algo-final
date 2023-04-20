@@ -25,7 +25,7 @@ def find_set(cards_on_board, num_properties, num_values):
     include = [ m.add_var(var_type=BINARY) for i in range(len(cards_on_board)) ]
 
     # Must include exactly enough cards to form a valid Set
-    m += xsum(include[i] for i in range(len(cards_on_board))) == num_properties
+    m += xsum(include[i] for i in range(len(cards_on_board))) == num_values
 
 
     for p in range(num_properties):
