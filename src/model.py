@@ -40,7 +40,7 @@ def find_set(cards_on_board, num_properties, num_values):
         # at most one z value can be true and one value is true if and only if y is false
         m += xsum(z[i] for i in range(num_values)) == 1 - y
         
-        # a valid Set is formed on the condition that all values for every property are either all the same or all different
+        # a valid set is formed on the condition that all values for every property are either all the same or all different
         for i, _ in enumerate(vsums):
             m += vsums[i] == y + num_properties * z[i]
 
