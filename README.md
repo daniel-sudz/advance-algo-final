@@ -149,9 +149,6 @@ It has proven that 21 cards are the mininum number of cards that are needed for 
 
 We use this fact in the test_model.py file to make unit tests stronger for our model implementation. The test file contains assertions that the solver should always find a valid set with randomly generated boards of 21 cards. Additionally, an assertion is written to make that the solver fails to find a valid set for random combinations of 15 cards (higher than that is not computationally feasible).
 
-
-# Sidenote: 2-card one-compliment rule
-
 # References
 
 [^1]: https://www.setgame.com/sites/default/files/instructions/SET%20INSTRUCTIONS%20-%20ENGLISH.pdf
