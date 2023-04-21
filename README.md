@@ -121,6 +121,35 @@ a set can be shown to always form a line with modular wrap-around.
 
 # Sidenote: Minimum cards to deal before valid Set
 
+It has proven that 21 cards are the mininum number of cards that are needed for a valid Set to exist in traditional gameplay. In fact, exact probability distributions have been calculated by Don Knuth using a custom-written program and listen below: [^10]
+
+| Set Size | Probability of Valid Set |
+| -------- | ------------------------ |
+| 1        | 0.00000000000000         |
+| 2        | 0.00000000000000         |
+| 3        | 0.01265822784810         |
+| 4        | 0.05063291139241         |
+| 5        | 0.12411638993917         |
+| 6        | 0.23702812843386         |
+| 7        | 0.38339288958876         |
+| 8        | 0.54646648344183         |
+| 9        | 0.70277715297383         |
+| 10       | 0.83054958637630         |
+| 11       | 0.91824367776036         |
+| 12       | 0.96769802141450         |
+| 13       | 0.98997192274043         |
+| 14       | 0.99768669219781         |
+| 15       | 0.99963531493045         |
+| 16       | 0.99996602550906         |
+| 17       | 0.99999862737549         |
+| 18       | 0.99999998580641         |
+| 19       | 0.99999999999099         |
+| 20       | 0.99999999999985         |
+| 21       | 1.00000000000000         |
+
+We use this fact in the test_model.py file to make unit tests stronger for our model implementation. The test file contains assertions that the solver should always find a valid set with randomly generated boards of 21 cards. Additionally, an assertion is written to make that the solver fails to find a valid set for random combinations of 15 cards (higher than that is not computationally feasible).
+
+
 # Sidenote: 2-card one-compliment rule
 
 # References
@@ -134,3 +163,4 @@ a set can be shown to always form a line with modular wrap-around.
 [^7]: https://en.wikipedia.org/wiki/Karp%27s_21_NP-complete_problems#CITEREFKarp1972
 [^8]: http://pbg.cs.illinois.edu/papers/set.pdf
 [^9]: https://www.irif.fr/~vmitsou/setgame.pdf
+[^10]: https://math.stackexchange.com/a/203146
