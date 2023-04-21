@@ -121,7 +121,7 @@ a set can be shown to always form a line with modular wrap-around.
 
 # Sidenote: Minimum cards to deal before valid Set
 
-It has proven that 21 cards are the mininum number of cards that are needed for a valid Set to exist in traditional gameplay. In fact, exact probability distributions have been calculated by Don Knuth using a custom-written program and listen below: [^10]
+It has proven that 21 cards are the mininum number of cards that are needed for a valid Set to exist in traditional gameplay. In fact, exact probability distributions have been calculated by Don Knuth using a custom-written program and listed below: [^10]
 
 | Set Size | Probability of Valid Set |
 | -------- | ------------------------ |
