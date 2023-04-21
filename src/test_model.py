@@ -1,13 +1,11 @@
 from model import find_set
-import random
-from math import floor
 from copy import deepcopy
+import random
+import pytest
 
 # create a random board of traditional set gameplay (p=4, v=3). Returns the cards_on_board
-def create_random_board_traditional_set():
+def create_random_board_traditional_set(num_properties, num_values, num_cards):
     cards_on_board = [[]]
-    num_properties = 4
-    num_values = 3
 
     # generate all possible cards... in this case of traditional set this is 81 cards (3 ** 4)
     for p in range(num_properties):
@@ -30,8 +28,7 @@ def create_random_board_traditional_set():
             assert len(cards_on_board[c][p]) == num_values
     
     # it has been proven that 21 cards must always contain a valid set in traditional gameplay
-    return random.sample(cards_on_board, k=24)
-create_random_board_traditional_set()
+    return random.sample(cards_on_board, k=num_cards)
 
 # given a set that our solver finds, make sure that it is actually valid
 def assert_valid_set(cards_on_board, result, num_properties, num_values): 
@@ -89,13 +86,30 @@ def test_small_board_match_same():
     assert result[1] == 1
 
 # run finding a valid set on a traditional board in which we know sets exists and make sure we find one
+# it is known that a valid set must exist when there are >= 21 cards on the board
 def test_stress_test_traditional_set():
-    iterations = 1000
+    iterations = 10000
     for i in range(iterations):
-        cards_on_board = create_random_board_traditional_set()
+        cards_on_board = create_random_board_traditional_set(4, 3, 21)
         num_properties = 4
         num_values = 3
         result = find_set(cards_on_board, num_properties, num_values)
 
         # make sure that the result is valid
         assert_valid_set(cards_on_board, result, num_properties, num_values)
+
+# probability breakdowns for finding a valid set below 21 cards:
+# https://math.stackexchange.com/a/203146
+# we can test our solver by making sure that a set is not found at some point for decks with 15 cards
+# with 10000 iterations, the chance of not finding a set should be around 1 - ((0.99963531493045) ^ 10000) ~= 0.9739442246
+# it should take a few minutes before the solver fails to find a valid set
+def test_stress_traditional_set_no_set_found():
+    with pytest.raises(Exception):
+        while True:
+            cards_on_board = create_random_board_traditional_set(4, 3, 15)
+            num_properties = 4
+            num_values = 3
+            result = find_set(cards_on_board, num_properties, num_values)
+
+            # make sure that the result is valid
+            assert_valid_set(cards_on_board, result, num_properties, num_values)
