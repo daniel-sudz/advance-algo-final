@@ -26,6 +26,7 @@ def find_set(cards_on_board, num_properties, num_values):
 
     # Must include exactly enough cards to form a valid Set
     m += xsum(include[i] for i in range(len(cards_on_board))) == num_values
+    m.objective = maximize(xsum(include[i] for i in range(len(cards_on_board))))
 
 
     for p in range(num_properties):
@@ -44,33 +45,9 @@ def find_set(cards_on_board, num_properties, num_values):
         for i, _ in enumerate(vsums):
             m += vsums[i] == y + num_properties * z[i]
 
-    status = m.optimize(max_seconds=10)
+    m.verbose = 1
+    status = m.optimize(max_seconds=100)
 
     if status == OptimizationStatus.OPTIMAL or status == OptimizationStatus.FEASIBLE:
         return [round(v.x) for v in include]
     return []
-
-# Run the solver on a traditional version of Set and an example board
-# It's technically not valid as some cards are duplicates but this is just an example of API usage
-# Cards 1, 2, and 8 are selected because they are all duplicates and all have the same values
-def example_find():
-    cards_on_board = [
-        [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]], # card 1
-        [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]], # card 2
-        [[0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]], # card 3
-        [[0, 0, 1, 0], [1, 0, 0, 0], [1, 0, 0, 0]], # card 4
-        [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]], # card 5
-        [[0, 0, 1, 0], [0, 0, 0, 1], [0, 1, 0, 0]], # card 6
-        [[0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1]], # card 7
-        [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]], # card 8
-        [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 0, 1]], # card 9
-        [[1, 0, 0, 0], [0, 0, 0, 1], [1, 0, 0, 0]], # card 10
-        [[0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 1, 0]], # card 11
-        [[1, 0, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]], # card 12
-    ]
-    num_properties = 3 
-    num_values = 4
-    result = find_set(cards_on_board, num_properties, num_values)
-    print(result)
-
-example_find()

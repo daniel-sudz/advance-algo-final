@@ -1,28 +1,43 @@
 from model import find_set
-from random import random
+import random
 from math import floor
+from copy import deepcopy
 
 # create a random board of traditional set gameplay (p=4, v=3). Returns the cards_on_board
 def create_random_board_traditional_set():
-    cards_on_board = []
+    cards_on_board = [[]]
     num_properties = 4
     num_values = 3
 
-    # it is proven that 21 cards are sufficient to always have a valid set in the traditional game
-    for n in range(21):
-        card = []
-        # find which value to set for every property in the random card
-        for p in range(num_properties):
-            which_value = floor(random() * num_values)
-            values = [0] * num_values
-            values[which_value] = 1
-            card += [values]
-        cards_on_board += [card]
+    # generate all possible cards... in this case of traditional set this is 81 cards (3 ** 4)
+    for p in range(num_properties):
+        for c in range(len(cards_on_board)):
+            card_to_expand = deepcopy(cards_on_board[c])
+            for v in range(num_values):
+                values = [0] * num_values
+                values[v] = 1
+                if(v == 0):
+                    cards_on_board[c] += [values]
+                else:
+                    nc = card_to_expand + [values]
+                    cards_on_board += [nc]
 
-    return cards_on_board
+    # some basic sizing assertions against the cards that we have generated
+    assert len(cards_on_board) == num_values ** num_properties 
+    for c in range(len(cards_on_board)):
+        assert len(cards_on_board[c]) == num_properties
+        for p in range(len(cards_on_board[c])):
+            assert len(cards_on_board[c][p]) == num_values
+    
+    # it has been proven that 21 cards must always contain a valid set in traditional gameplay
+    return random.sample(cards_on_board, k=24)
+create_random_board_traditional_set()
 
 # given a set that our solver finds, make sure that it is actually valid
 def assert_valid_set(cards_on_board, result, num_properties, num_values): 
+    # solution has been found
+    assert (len(result)) != 0
+
     # select the cards from the output of the solver
     cards_in_set = []
     for i, _ in enumerate(cards_on_board):
@@ -42,7 +57,6 @@ def assert_valid_set(cards_on_board, result, num_properties, num_values):
                         assert cards_in_set[c1][p] == cards_in_set[c2][p]
         # all values must be different
         else:
-            print(cards_in_set)
             for c1 in range(num_values):
                 for c2 in range(num_values):
                     if c1 != c2:
@@ -76,7 +90,7 @@ def test_small_board_match_same():
 
 # run finding a valid set on a traditional board in which we know sets exists and make sure we find one
 def test_stress_test_traditional_set():
-    iterations = 10
+    iterations = 1000
     for i in range(iterations):
         cards_on_board = create_random_board_traditional_set()
         num_properties = 4
