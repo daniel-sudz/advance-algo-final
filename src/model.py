@@ -43,7 +43,7 @@ def find_set(cards_on_board, num_properties, num_values):
         
         # a valid set is formed on the condition that all values for every property are either all the same or all different
         for i, _ in enumerate(vsums):
-            m += vsums[i] == y + num_properties * z[i]
+            m += vsums[i] == y + num_values * z[i]
 
     m.verbose = 1
     status = m.optimize(max_seconds=100)
